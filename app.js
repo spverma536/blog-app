@@ -7,18 +7,30 @@ const session = require('express-session');
 const config = require('./config/database');
 const passport = require('passport');
 
+let RemoteMongoDB =  'mongodb+srv://spverma:blog-app@blogcluster.nzwqx.mongodb.net/<dbname>?retryWrites=true&w=majority';
 
-mongoose.connect(process.env.MONGODB_URI || config.database);
-let db = mongoose.connection;
+mongoose.connect(RemoteMongoDB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  }).then(connection => {
+    console.log('mongoDB connected to ' + connection.connection.host)
+  }).catch(err => {
+    console.log(err)
+    process.exit(1)
+  })
 
-db.once('open', () => {
-    console.log('Connected to mongodb');
-});
+// mongoose.connect(process.env.MONGODB_URI || config.database);
+// let db = mongoose.connection;
 
-//check for database errors
-db.on('err', () => {
-    console.log(err);
-});
+// db.once('open', () => {
+//     console.log('Connected to mongodb');
+// });
+
+// db.on('err', () => {
+//     console.log(err);
+// });
 
 //init app
 const app = express();
