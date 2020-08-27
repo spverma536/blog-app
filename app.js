@@ -16,7 +16,7 @@ db.once('open', () => {
 });
 
 //check for database errors
-db.on('error', () => {
+db.on('err', () => {
     console.log(err);
 });
 
