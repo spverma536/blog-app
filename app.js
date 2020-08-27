@@ -7,6 +7,7 @@ const session = require('express-session');
 const config = require('./config/database');
 const passport = require('passport');
 
+
 mongoose.connect(process.env.MONGODB_URI || config.database);
 let db = mongoose.connection;
 
@@ -14,7 +15,7 @@ db.once('open', () => {
     console.log('Connected to mongodb');
 });
 
-//check for db errors
+//check for database errors
 db.on('error', () => {
     console.log(err);
 });
